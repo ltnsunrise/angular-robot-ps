@@ -14,15 +14,9 @@
     </div>
   </div>
   <div class="price">
+    <p [ngClass]="getPriceClasses()">{{ product().price | currency }}</p>
     @if (product().discount > 0) {
-      <p class="strikethrough">
-        {{ product().price | currency }}
-      </p>
-      <p>
-        {{ product().price * (1 - product().discount) | currency }}
-      </p>
-    } @else {
-      <p>{{ product().price | currency }}</p>
+      <p>{{ product().price * (1 - product().discount) | currency }}</p>
     }
     <button class="cta" (click)="addToCart(product(), $event)">Buy</button>
   </div>
