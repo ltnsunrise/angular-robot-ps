@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { IProduct } from '../product.model';
 import { CurrencyPipe } from '@angular/common';
 
@@ -9,22 +9,20 @@ import { CurrencyPipe } from '@angular/common';
   styleUrl: './product-details.component.css'
 })
 export class ProductDetailsComponent {
-  product: IProduct
-
+  product = input.required<IProduct>()
+  availableInventory = signal(3)
   constructor() {
-    this.product = {
-      id: 1,
-      description:
-        "A robot head with an unusually large eye and teloscpic neck -- excellent for exploring high spaces.",
-      name: "Large Cyclops",
-      imageName: "head-big-eye.png",
-      category: "Heads",
-      price: 1220.5,
-      discount: 0.2,
-    }
+
   }
 
   getImagePath(product: IProduct): string {
     return `/images/robot-parts/${product.imageName}`;
+  }
+
+  addToCart(product: IProduct, event: MouseEvent): void {
+    setTimeout(() => {
+      this.availableInventory.update(p => p - 1);
+    }, 200);
+    product.name += " (Added to cart)";
   }
 }
