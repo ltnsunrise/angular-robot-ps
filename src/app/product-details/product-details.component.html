@@ -1,0 +1,19 @@
+<div class="product">
+  <img
+    class=""
+    [src]="getImagePath(product)"
+    [alt]="product.imageName"
+    srcset=""
+  />
+  <div class="details">
+    <div>
+      <h2>{{ product.name }}</h2>
+      <p>{{ product.description }}</p>
+      <p>Part Type: {{ product.category }}</p>
+    </div>
+  </div>
+  <div class="price">
+    <p>{{ product.price | currency }}</p>
+    <button class="cta">Buy</button>
+  </div>
+</div>
