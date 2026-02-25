@@ -1,3 +1,4 @@
+import { CartService } from './../cart.service';
 import { Component, signal, input } from '@angular/core';
 import { IProduct } from '../product.model';
 import { CurrencyPipe, NgClass } from '@angular/common';
@@ -11,12 +12,15 @@ import { CurrencyPipe, NgClass } from '@angular/common';
 export class CartItemComponent {
   product = input.required<IProduct>();
 
+  constructor(private cartService: CartService) {
+  }
+
   getImageUrl(product: IProduct) {
     return '/images/robot-parts/' + product.imageName;
   }
 
   removeFromCart() {
-
+    this.cartService.removeFromCart(this.product())
   }
 
   getPriceClasses() {
