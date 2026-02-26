@@ -1,8 +1,25 @@
+@let hasCartItems = cartItems().length > 0;
+
 <h1 class="header">Your Cart</h1>
+
+@if (hasCartItems) {
+  <button (click)="checkout.scrollIntoView({ behavior: 'smooth' })">
+    Prceed to Checkout
+  </button>
+}
+
 <ul class="cart">
   @for (product of cartItems(); track product.id) {
     <li>
       <bot-cart-item [product]="product" />
     </li>
+  } @empty {
+    <h2>You have no items in your cart</h2>
   }
 </ul>
+
+<div #checkout>
+  @if (hasCartItems) {
+    <button class="cta">Checkout</button>
+  }
+</div>

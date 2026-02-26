@@ -11,7 +11,7 @@ import { CurrencyPipe, NgClass } from '@angular/common';
 })
 export class ProductDetailsComponent {
   product = input.required<IProduct>()
-  availableInventory = signal(3)
+  availableInventory = signal(5)
   constructor(private cartService: CartService) {
 
   }
@@ -22,7 +22,7 @@ export class ProductDetailsComponent {
 
   addToCart(event: MouseEvent): void {
     this.cartService.addToCart(this.product())
-    this.product().name += " (Added to cart)";
+    this.availableInventory.update((p) => Math.max(0, p - 1));
   }
 
   getPriceClasses() {

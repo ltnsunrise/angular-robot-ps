@@ -18,4 +18,6 @@ export class CatalogComponent {
   ngOnInit(): void {
     this.products = this.productsService.getProducts()
   }
+
+
 }

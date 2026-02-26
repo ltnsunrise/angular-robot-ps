@@ -6,4 +6,5 @@ export interface IProduct {
   imageName: string;
   category: string;
   discount: number;
+  productNotes?: string;
 }
