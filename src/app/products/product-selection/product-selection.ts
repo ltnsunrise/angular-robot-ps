@@ -14,8 +14,13 @@ import { ProductService } from '../product.service';
 export class ProductSelection {
   pageTitle = 'Product Selection';
   private productService = inject(ProductService);
+
   // products = signal<Product[]>(ProductData.products);
   products = this.productService.productResource.value;
+  isLoading = this.productService.productResource.isLoading;
+  error = this.productService.productResource.error;
+  errorMsg = computed(() => this.error()?.message ?? '');
+
   selectedProduct = signal<Product | undefined>(undefined);
   quantity = linkedSignal({
     source: this.selectedProduct,

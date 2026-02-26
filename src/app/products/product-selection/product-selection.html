@@ -1,5 +1,10 @@
 <div class="content">
   <div class="title">{{pageTitle}}</div>
+  @if (isLoading()) {
+  <div>...loading products</div>
+  }@else if (errorMsg()) {
+  <div style="color: red">An error occurred: {{errorMsg()}}</div>
+  } @else {
   <div class="grid">
     <div class="row">
       <div class="cellFull">
@@ -11,6 +16,7 @@
         </select>
       </div>
     </div>
+
     <div class="row">
       <div class="cellLeft">Name:</div>
       <div class="cellRight">{{selectedProduct()?.productName}}</div>
@@ -49,4 +55,5 @@
       </div>
     </div>
   </div>
+  }
 </div>
