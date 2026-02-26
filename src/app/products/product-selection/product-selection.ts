@@ -4,10 +4,11 @@ import { Product } from '../product';
 import { FormsModule } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 import { ProductService } from '../product.service';
+import { ReviewList } from '../../reviews/review-list/review-list';
 
 @Component({
   selector: 'app-product-selection',
-  imports: [FormsModule, CurrencyPipe],
+  imports: [FormsModule, CurrencyPipe, ReviewList],
   templateUrl: './product-selection.html',
   styleUrl: './product-selection.css'
 })
@@ -21,7 +22,8 @@ export class ProductSelection {
   error = this.productService.productResource.error;
   errorMsg = computed(() => this.error()?.message ?? '');
 
-  selectedProduct = signal<Product | undefined>(undefined);
+  selectedProduct = this.productService.selectedProduct;
+
   quantity = linkedSignal({
     source: this.selectedProduct,
     computation: () => 1
