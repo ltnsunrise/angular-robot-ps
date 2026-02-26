@@ -1,8 +1,9 @@
-import { Component, computed, linkedSignal, signal } from '@angular/core';
+import { Component, computed, inject, linkedSignal, signal } from '@angular/core';
 import { Product } from '../product';
-import { ProductData } from '../product-data';
+// import { ProductData } from '../product-data';
 import { FormsModule } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-product-selection',
@@ -12,7 +13,9 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class ProductSelection {
   pageTitle = 'Product Selection';
-  products = signal<Product[]>(ProductData.products);
+  private productService = inject(ProductService);
+  // products = signal<Product[]>(ProductData.products);
+  products = this.productService.productResource.value;
   selectedProduct = signal<Product | undefined>(undefined);
   quantity = linkedSignal({
     source: this.selectedProduct,
