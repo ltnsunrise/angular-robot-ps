@@ -6,40 +6,16 @@
     <div>
       <h2>{{ p.name }}</h2>
       <p>{{ p.description }}</p>
-      <p>
-        Part Type:
-        @switch (p.category) {
-          @case ("heads") {
-            Head
-          }
-          @case ("arms") {
-            Arm
-          }
-          @case ("bases") {
-            Base
-          }
-          @case ("torsos") {
-            Torso
-          }
-          @default {
-            {{ p.category }}
-          }
-        }
-      </p>
+      <p>Part Type: {{ p.category | categoryPartType: true }}</p>
       @if (p.productNotes; as notes) {
         <p>Product Notes: {{ notes }}</p>
       }
       <p>
         Available Inventory: {{ availableInventory() }}
-        @if (availableInventory() === 1) {
-          <span class="pill red">Only one left!</span>
-        } @else if (availableInventory() < 1) {
-          <span class="pill red">Out of stock!</span>
-        } @else if (availableInventory() < 5) {
-          <span class="pill yellow">Few left!</span>
-        } @else {
-          <span class="pill">Get yours today!</span>
-        }
+
+        <span class="pill" [class.red]="availableInventory() < 5">
+          {{ availableInventory() | i18nPlural: inventoryMapping }}
+        </span>
       </p>
     </div>
   </div>

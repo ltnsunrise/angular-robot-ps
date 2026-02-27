@@ -1,4 +1,26 @@
 ul {
   margin: 0 100px;
+}
+
+li {
   border-top: 2px solid #999;
+}
+
+.alt {
+  background-color: #eee;
+}
+
+.top {
+  border-top: none;
+}
+
+.filters {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.filters button {
+  width: 120px;
 }

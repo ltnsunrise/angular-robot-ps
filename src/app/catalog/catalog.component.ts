@@ -1,4 +1,4 @@
-import { Component, Signal } from '@angular/core';
+import { Component, effect, inject, signal, Signal } from '@angular/core';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 import { ProductsService } from '../products.service';
 import { IProduct } from '../product.model';
@@ -10,14 +10,23 @@ import { IProduct } from '../product.model';
   styleUrl: './catalog.component.css'
 })
 export class CatalogComponent {
-  products!: Signal<IProduct[]>
+  categoryFilter: string | null = null
+  productsService = inject(ProductsService)
+  products = this.productsService.resource.value
+  eff = effect(() => {
+    console.log(this.products());
 
-  constructor(private productsService: ProductsService) {
+  })
+  addProduct() {
+    this.products.update((p) => [...p, {
+      id: 6,
+      description: "Something new.",
+      name: "New arm",
+      imageName: "arm-propeller.png",
+      category: "arms",
+      price: 160,
+      discount: 0
+    }])
   }
-
-  ngOnInit(): void {
-    this.products = this.productsService.getProducts()
-  }
-
 
 }

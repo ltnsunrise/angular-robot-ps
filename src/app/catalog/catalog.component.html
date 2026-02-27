@@ -1,3 +1,12 @@
+<div class="filters">
+  <button (click)="categoryFilter = 'heads'">Heads</button>
+  <button (click)="categoryFilter = 'arms'">Arms</button>
+  <button (click)="categoryFilter = 'torsos'">Torsos</button>
+  <button (click)="categoryFilter = 'bases'">Bases</button>
+  <button (click)="categoryFilter = null">All</button>
+  <button (click)="addProduct()">Add New</button>
+</div>
+
 <ul>
   @for (
     product of products();

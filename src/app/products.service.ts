@@ -6,9 +6,9 @@ import { httpResource, HttpResourceRef } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ProductsService {
-  private resource: HttpResourceRef<IProduct[] | undefined> = httpResource(() => '/api/products')
+  resource: HttpResourceRef<IProduct[] | undefined> = httpResource(() => '/api/products', {
+    defaultValue: []
+  })
 
-  getProducts() {
-    return computed(() => this.resource.value() ?? [])
-  }
+
 }
