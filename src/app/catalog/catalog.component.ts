@@ -18,15 +18,20 @@ export class CatalogComponent {
 
   })
   addProduct() {
-    this.products.update((p) => [...p, {
-      id: 6,
-      description: "Something new.",
-      name: "New arm",
-      imageName: "arm-propeller.png",
-      category: "arms",
-      price: 160,
-      discount: 0
-    }])
+    this.products.update((p) => {
+      if (p) {
+        return [...p, {
+          id: 6,
+          description: "Something new.",
+          name: "New arm",
+          imageName: "arm-propeller.png",
+          category: "arms",
+          price: 160,
+          discount: 0
+        }]
+      }
+      return p
+    })
   }
 
 }
