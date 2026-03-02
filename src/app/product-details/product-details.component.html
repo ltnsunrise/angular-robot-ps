@@ -24,6 +24,11 @@
     @if (p.discount > 0) {
       <p>{{ p.price * (1 - p.discount) | currency }}</p>
     }
-    <button class="cta" (click)="addToCart($event)">Buy</button>
+    <!-- <ng-content /> -->
+    @if (mode() === "shop") {
+      <button class="cta" (click)="add()">Add to Cart</button>
+    } @else {
+      <button class="cta" (click)="remove()">Remove</button>
+    }
   </div>
 </div>

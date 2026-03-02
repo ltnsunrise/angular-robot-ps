@@ -61,3 +61,11 @@
   background-color: #ffcc00;
   color: #333;
 }
+
+button.cta,
+button.remove {
+  padding: 10px;
+  width: 100px;
+  display: block;
+  margin: 10px auto;
+}

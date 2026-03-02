@@ -1,5 +1,4 @@
-import { CartService } from './../cart.service';
-import { Component, input, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { IProduct } from '../product.model';
 import { CommonModule, CurrencyPipe, NgClass } from '@angular/common';
 import { CategoryPartTypePipe } from '../category-part-type-pipe';
@@ -13,10 +12,11 @@ import { CategoryPartTypePipe } from '../category-part-type-pipe';
 })
 export class ProductDetailsComponent {
   product = input.required<IProduct>()
-  availableInventory = signal(5)
-  constructor(private cartService: CartService) {
+  mode = input<'shop' | 'cart'>('shop')
+  addToCart = output<IProduct>()
+  removeFromCart = output<IProduct>()
 
-  }
+  availableInventory = signal(5)
 
   inventoryMapping = {
     '=0': 'Out of Stock',
@@ -31,12 +31,10 @@ export class ProductDetailsComponent {
     return `/images/robot-parts/${product.imageName}`;
   }
 
-  addToCart(event: MouseEvent): void {
-    this.cartService.addToCart(this.product())
-    this.availableInventory.update((p) => Math.max(0, p - 1));
-  }
-
   getPriceClasses() {
     return { strikethrough: this.product().discount > 0 }
   }
+
+  remove() { this.removeFromCart.emit(this.product()) }
+  add() { this.addToCart.emit(this.product()) }
 }

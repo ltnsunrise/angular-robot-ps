@@ -3,6 +3,7 @@ import { ProductDetailsComponent } from '../product-details/product-details.comp
 import { ProductsService } from '../products.service';
 import { IProduct } from '../product.model';
 import { FilterByCategoryPipe } from '../filter-by-category-pipe';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'bot-catalog',
@@ -14,10 +15,13 @@ export class CatalogComponent {
   categoryFilter: string | null = null
   productsService = inject(ProductsService)
   products = this.productsService.resource.value
-  eff = effect(() => {
-    console.log(this.products());
+  cartService = inject(CartService)
 
-  })
+  addToCart(product: IProduct): void {
+    this.cartService.addToCart(product)
+    // this.availableInventory.update((p) => Math.max(0, p - 1));
+  }
+
   addProduct() {
     this.products.update((p) => {
       if (p) {
