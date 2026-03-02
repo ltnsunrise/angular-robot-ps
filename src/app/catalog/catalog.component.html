@@ -9,7 +9,7 @@
 
 <ul>
   @for (
-    product of products();
+    product of products() ?? []|filterByCategoryPipe:categoryFilter;
     track product.id;
     let idx = $index, count = $count, even=$even, odd=$odd, first=$first, last=$last
   ) {

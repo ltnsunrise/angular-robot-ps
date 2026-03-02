@@ -2,10 +2,11 @@ import { Component, effect, inject, signal, Signal } from '@angular/core';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 import { ProductsService } from '../products.service';
 import { IProduct } from '../product.model';
+import { FilterByCategoryPipe } from '../filter-by-category-pipe';
 
 @Component({
   selector: 'bot-catalog',
-  imports: [ProductDetailsComponent],
+  imports: [ProductDetailsComponent, FilterByCategoryPipe],
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.css'
 })
