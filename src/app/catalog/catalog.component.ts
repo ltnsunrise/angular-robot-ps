@@ -19,7 +19,6 @@ export class CatalogComponent {
 
   addToCart(product: IProduct): void {
     this.cartService.addToCart(product)
-    // this.availableInventory.update((p) => Math.max(0, p - 1));
   }
 
   addProduct() {

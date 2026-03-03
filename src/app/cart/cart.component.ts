@@ -3,10 +3,11 @@ import { Component, inject, Signal, signal } from '@angular/core';
 import { IProduct } from '../product.model';
 import { CartService } from '../cart.service';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
+import { GroupByIdPipe } from '../group-by-id-pipe';
 
 @Component({
   selector: 'bot-cart',
-  imports: [ProductDetailsComponent],
+  imports: [ProductDetailsComponent, GroupByIdPipe],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })

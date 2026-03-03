@@ -17,6 +17,12 @@
           {{ availableInventory() | i18nPlural: inventoryMapping }}
         </span>
       </p>
+      <div>Favorite rating: {{ favorite() }}</div>
+      <bot-slider [(sliderValue)]="favorite" />
+      <!-- <bot-slider
+        [(sliderValue)]="favorite"
+        (sliderValueChange)="handleSliderChange($event)"
+      /> -->
     </div>
   </div>
   <div class="price">

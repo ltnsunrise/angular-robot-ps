@@ -9,8 +9,9 @@
 }
 
 <ul class="cart">
-  @for (product of cartItems(); track product.id) {
+  @for (product of cartItems() | groupById; track product.id) {
     <li>
+      g
       <!-- <bot-cart-item [product]="product" /> -->
       <bot-product-details
         [product]="product"

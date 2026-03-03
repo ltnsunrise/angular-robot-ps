@@ -15,7 +15,7 @@ app.get("/api/products", (req, res) => {
       imageName: "head-big-eye.png",
       category: "heads",
       price: 1220.5,
-      discount: 0.2,
+      discount: 25,
     },
     {
       id: 17,
