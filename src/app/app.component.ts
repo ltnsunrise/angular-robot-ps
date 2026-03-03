@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
-import { SiteHeaderComponent } from './site-header/site-header.component';
+import { SiteHeaderComponent } from './core/site-header/site-header.component';
 import { CommonModule } from '@angular/common';
 
 @Component({

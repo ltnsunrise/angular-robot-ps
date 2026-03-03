@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ProductDetailsComponent } from '../../shared/product-details/product-details.component';
 import { CommonModule } from '@angular/common';
 import { Product } from '../product.model';
 import { productsArray } from '../products-data';
+import { ProductsService } from '@catalog/products.service';
+import { CartService } from '@core/cart.service';
 
 @Component({
   selector: 'bot-search',
@@ -11,19 +13,16 @@ import { productsArray } from '../products-data';
   styleUrls: ['./search.component.css'],
   standalone: true,
 })
-export class SearchComponent implements OnInit {
-  products: Product[] = [];
+export class SearchComponent {
+  private productsService = inject(ProductsService)
+  private cartService = inject(CartService)
+
+  products: Product[] = this.productsService.getProducts();
   searchTerm: string = '';
-  cart: Product[] = [];
-
-  constructor() { }
-
-  ngOnInit() {
-    this.products = [...productsArray];
-  }
+  cart: Product[] = this.cartService.cart;
 
   addToCart(product: Product) {
-    this.cart.push(product);
+    this.cartService.add(product);
   }
 
   filter(event: Event) {

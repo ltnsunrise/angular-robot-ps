@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ProductDetailsComponent } from '@shared/product-details/product-details.component';
 import { CommonModule } from '@angular/common';
 import { Product } from '../product.model';
+import { CartService } from '@core/cart.service';
 
 @Component({
   selector: 'bot-cart',
@@ -10,26 +11,20 @@ import { Product } from '../product.model';
   imports: [CommonModule, ProductDetailsComponent],
   standalone: true,
 })
-export class CartComponent implements OnInit {
-  private cart: Product[] = [];
-
-  constructor() { }
-
-  ngOnInit() { }
+export class CartComponent {
+  private cartService = inject(CartService)
+  private cart: Product[] = this.cartService.cart
 
   get cartItems() {
     return this.cart;
   }
 
   get cartTotal() {
-    return this.cart.reduce((prev, next) => {
-      let discount = next.discount && next.discount > 0 ? 1 - next.discount : 1;
-      return prev + next.price * discount;
-    }, 0);
+    return this.cartService.cartTotal;
   }
 
   removeFromCart(product: Product) {
-    this.cart.filter(p => p.id !== product.id);
+    this.cartService.remove(product);
   }
 
   getImageUrl(product: Product) {
