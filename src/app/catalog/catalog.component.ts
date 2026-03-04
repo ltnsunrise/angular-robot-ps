@@ -17,7 +17,12 @@ export class CatalogComponent {
   private cartService = inject(CartService)
   private productsService = inject(ProductsService)
 
+  private readonly _initProducts = setTimeout(() => {
+    this.productsService.refreshProducts()
+    // this.products = this.productsService.getProducts();
+  }, 3000)
   products: Product[] = this.productsService.getProducts();
+
   cart: Product[] = this.cartService.cart;
 
 
