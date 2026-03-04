@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { productsArray } from './products-data';
 import { ProductsService } from './products.service';
 import { CartService } from '@core/cart.service';
+import { Observable } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -16,16 +17,10 @@ import { CartService } from '@core/cart.service';
 export class CatalogComponent {
   private cartService = inject(CartService)
   private productsService = inject(ProductsService)
+  products: Observable<Product[]> = this.productsService.getProducts()
 
 
-  products: Product[] = [];
-  ngOnInit() {
-    this.productsService.getProducts()
-      .subscribe(p => this.products = p);
-    setTimeout(() => {
-      this.productsService.refreshProducts();
-    }, 3000)
-  }
+
 
   cart: Product[] = this.cartService.cart();
 

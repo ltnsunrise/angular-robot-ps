@@ -5,6 +5,8 @@ import { Product } from '../product.model';
 import { productsArray } from '../products-data';
 import { ProductsService } from '@catalog/products.service';
 import { CartService } from '@core/cart.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'bot-search',
@@ -17,17 +19,9 @@ export class SearchComponent {
   private productsService = inject(ProductsService)
   private cartService = inject(CartService)
 
-  products: Product[] = [];
+  products: Observable<Product[]> = this.productsService.getProducts()
   searchTerm: string = '';
   cart: Product[] = this.cartService.cart();
-
-  ngOnInit() {
-    this.productsService.getProducts()
-      .subscribe(p => this.products = p);
-    setTimeout(() => {
-      this.productsService.refreshProducts();
-    }, 3000)
-  }
 
   addToCart(product: Product) {
     this.cartService.add(product);
@@ -37,11 +31,15 @@ export class SearchComponent {
     this.searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
   }
 
-  getFilteredProducts() {
-    return this.searchTerm === ''
-      ? this.products
-      : this.products.filter(
-        (product: Product) => product.name.toLowerCase().includes(this.searchTerm)
-      );
+  getFilteredProducts(): Observable<Product[]> {
+    return this.products.pipe(
+      map((products: Product[]) =>
+        this.searchTerm === ''
+          ? products
+          : products.filter((product: Product) =>
+            product.name.toLowerCase().includes(this.searchTerm)
+          )
+      )
+    );
   }
 }
