@@ -1,23 +1,23 @@
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { Product } from '@shared/product.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  cart: Product[] = [];
+  cart = signal<Product[]>([]);
+
   add(product: Product) {
-    this.cart.push(product);
+    this.cart.update((cart) => [...cart, product]);
   }
 
   remove(product: Product) {
-    this.cart.splice(this.cart.indexOf(product), 1);
+    this.cart.update((cart) => cart.filter((p) => p !== product));
   }
 
-  get cartTotal() {
-    return this.cart.reduce((prev, next) => {
-      let discount = next.discount && next.discount > 0 ? 1 - next.discount : 1;
-      return prev + next.price * discount;
-    }, 0);
-  }
+  cartTotal = computed(() => this.cart().reduce((prev, next) => {
+    let discount = next.discount && next.discount > 0 ? 1 - next.discount : 1;
+    return prev + next.price * discount;
+  }, 0));
+
 }

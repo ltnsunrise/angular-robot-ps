@@ -19,7 +19,7 @@ export class SearchComponent {
 
   products: Product[] = [];
   searchTerm: string = '';
-  cart: Product[] = this.cartService.cart;
+  cart: Product[] = this.cartService.cart();
 
   ngOnInit() {
     this.productsService.getProducts()

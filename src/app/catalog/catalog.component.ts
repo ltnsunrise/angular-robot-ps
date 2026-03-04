@@ -27,7 +27,7 @@ export class CatalogComponent {
     }, 3000)
   }
 
-  cart: Product[] = this.cartService.cart;
+  cart: Product[] = this.cartService.cart();
 
 
   addToCart(product: Product) {

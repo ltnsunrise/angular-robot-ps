@@ -13,7 +13,7 @@ import { CartService } from '@core/cart.service';
 })
 export class CartComponent {
   private cartService = inject(CartService)
-  private cart: Product[] = this.cartService.cart
+  private cart: Product[] = this.cartService.cart()
 
   get cartItems() {
     return this.cart;
