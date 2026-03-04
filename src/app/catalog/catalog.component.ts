@@ -17,11 +17,15 @@ export class CatalogComponent {
   private cartService = inject(CartService)
   private productsService = inject(ProductsService)
 
-  private readonly _initProducts = setTimeout(() => {
-    this.productsService.refreshProducts()
-    // this.products = this.productsService.getProducts();
-  }, 3000)
-  products: Product[] = this.productsService.getProducts();
+
+  products: Product[] = [];
+  ngOnInit() {
+    this.productsService.getProducts()
+      .subscribe(p => this.products = p);
+    setTimeout(() => {
+      this.productsService.refreshProducts();
+    }, 3000)
+  }
 
   cart: Product[] = this.cartService.cart;
 

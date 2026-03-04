@@ -17,9 +17,17 @@ export class SearchComponent {
   private productsService = inject(ProductsService)
   private cartService = inject(CartService)
 
-  products: Product[] = this.productsService.getProducts();
+  products: Product[] = [];
   searchTerm: string = '';
   cart: Product[] = this.cartService.cart;
+
+  ngOnInit() {
+    this.productsService.getProducts()
+      .subscribe(p => this.products = p);
+    setTimeout(() => {
+      this.productsService.refreshProducts();
+    }, 3000)
+  }
 
   addToCart(product: Product) {
     this.cartService.add(product);
