@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ProductDetailsComponent } from '@shared/product-details/product-details.component';
 import { CommonModule } from '@angular/common';
 import { Product } from '../product.model';
-import { CartService } from '@core/cart.service';
+import { CART_SERVICE_TOKEN } from '@core/cart.service';
 
 @Component({
   selector: 'bot-cart',
@@ -12,7 +12,7 @@ import { CartService } from '@core/cart.service';
   standalone: true,
 })
 export class CartComponent {
-  private cartService = inject(CartService)
+  private cartService = inject(CART_SERVICE_TOKEN)
   private cart: Product[] = this.cartService.cart()
 
   get cartItems() {

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Product } from '../product.model';
 import { productsArray } from '../products-data';
 import { ProductsService } from '@catalog/products.service';
-import { CartService } from '@core/cart.service';
+import { CART_SERVICE_TOKEN } from '@core/cart.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -17,7 +17,7 @@ import { map } from 'rxjs/operators';
 })
 export class SearchComponent {
   private productsService = inject(ProductsService)
-  private cartService = inject(CartService)
+  private cartService = inject(CART_SERVICE_TOKEN)
 
   products: Observable<Product[]> = this.productsService.getProducts()
   searchTerm: string = '';
