@@ -1,18 +1,17 @@
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Product } from '@shared/product.model';
-import { productsArray } from './products-data';
-import { Observable, Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { IProductsService } from '@shared/products-service.interface';
+import { Observable, of } from 'rxjs';
+import { engineers } from './squad-catalog/engineers';
 
 @Injectable({
   providedIn: 'root'
 })
-
-export class ProductsService implements IProductsService {
+export class EngineersService implements IProductsService {
   private http = inject(HttpClient)
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>('/api/products')
+    return of(engineers)
   }
 }
