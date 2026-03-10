@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 import { ProductService } from '../product.service';
 import { ReviewList } from '../../reviews/review-list/review-list';
+import { filter, fromEvent, map, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-product-selection',
@@ -15,6 +17,24 @@ import { ReviewList } from '../../reviews/review-list/review-list';
 export class ProductSelection {
   pageTitle = 'Product Selection';
   private productService = inject(ProductService);
+
+  showHelp = signal(false);
+
+  questionMark$ = fromEvent<KeyboardEvent>(document, 'keydown').pipe(
+    map(event => event.key),
+    // tap(key => console.log(key)),
+    filter(key => key === '?' || key === 'Escape'),
+    tap(key => this.showHelp.set(key === '?')),
+    takeUntilDestroyed()
+  ).subscribe()
+
+  // sub = this.questionMark$.subscribe(
+  // (key) => {
+  // if (key) {
+  //   this.showHelp.update(value => !value);
+  // }
+  // }
+  // );
 
   // products = signal<Product[]>(ProductData.products);
   products = this.productService.productResource.value;
