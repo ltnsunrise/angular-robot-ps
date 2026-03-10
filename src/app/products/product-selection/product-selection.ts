@@ -7,6 +7,7 @@ import { ProductService } from '../product.service';
 import { ReviewList } from '../../reviews/review-list/review-list';
 import { filter, fromEvent, map, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SupplierService } from '../../suppliers/supplier.service';
 
 @Component({
   selector: 'app-product-selection',
@@ -17,6 +18,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class ProductSelection {
   pageTitle = 'Product Selection';
   private productService = inject(ProductService);
+  private supplierService = inject(SupplierService)
 
   showHelp = signal(false);
 
@@ -74,4 +76,7 @@ export class ProductSelection {
   // get color(): string {
   //   return this.total() > 200 ? 'green' : 'blue';
   // }
+
+  readonly selectedProductSuppliers = this.supplierService.suppliersResource.value;
+  suppliers = computed(() => this.selectedProductSuppliers().map(s => s.name).join(', '));
 }
