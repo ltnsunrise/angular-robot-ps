@@ -1,9 +1,9 @@
 import { HttpClient, httpResource } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { effect, inject, Injectable, signal } from '@angular/core';
 import { Review } from './review';
 import { ProductService } from '../products/product.service';
-import { rxResource } from '@angular/core/rxjs-interop';
-import { of } from 'rxjs';
+import { rxResource, toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { debounceTime, distinctUntilChanged, map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -28,4 +28,36 @@ export class ReviewService {
     },
     defaultValue: []
   })
+
+  // With httpResource (Not used)
+  // Use appropriate regular expression syntax to get an exact match on the id
+  // Otherwise an id = 1 will match 10, 11, ... 100, 101, etc.
+  reviewsResourceHTTP = httpResource<Review[]>(() =>
+    this.productService.selectedProduct() ?
+      `${this.reviewsUrl}?productId=^${this.productService.selectedProduct()?.id}$` : undefined,
+    { defaultValue: [] }
+  );
+
+  // *** To support search ***
+
+  enteredSearch = signal('');
+  searchText$ = toObservable(this.enteredSearch).pipe(
+    debounceTime(400),
+    distinctUntilChanged(),
+    map(text => text.toLocaleLowerCase())
+  );
+  searchText = toSignal(this.searchText$, { initialValue: '' });
+
+  reviewSearchResource = rxResource({
+    params: this.searchText,
+    stream: (p) =>
+      this.http.get<Review[]>(`${this.reviewsUrl}?text=${p.params}`).pipe(
+        map(items => items.sort((a, b) => a.title < b.title ? -1 : 0))
+      ),
+    defaultValue: []
+  });
+
+  effSearch = effect(() => console.log('Entered search:', this.searchText()));
+  effLoading = effect(() => console.log('HTTP request loading:',
+    this.reviewSearchResource.isLoading()));
 }
